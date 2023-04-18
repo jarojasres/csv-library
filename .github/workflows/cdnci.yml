@@ -6,6 +6,8 @@ on:
       - main # Cambia el nombre de la rama si es necesario
 
 jobs:
+  permissions:
+    id-token: write
   build:
     runs-on: ubuntu-latest
     environment: production

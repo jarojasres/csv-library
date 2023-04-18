@@ -19,7 +19,7 @@ jobs:
         node-version: 14
 
     - name: Instalar dependencias
-      run: npm ci
+      run: yarn install
 
     - name: Construir archivo de JavaScript
       run: npm run build

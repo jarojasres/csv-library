@@ -27,8 +27,8 @@ jobs:
     - name: Publicar en CDN de Azure
       run: |
         az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }}
-    -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
-    az storage blob upload-batch --destination-container libraries --destination-path /cdn --source ./dist
+        -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+        az storage blob upload-batch --destination-container libraries --destination-path /cdn --source ./dist
     
     - name: Obtener URL del CDN de Azure
       run: |

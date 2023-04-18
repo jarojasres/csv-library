@@ -1,0 +1,46 @@
+name: Publicar en CDN de Azure
+
+on:
+  push:
+    branches:
+      - main # Cambia el nombre de la rama si es necesario
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout del repositorio
+      uses: actions/checkout@v2
+
+    - name: Configurar Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+
+    - name: Instalar dependencias
+      run: npm ci
+
+    - name: Construir archivo de JavaScript
+      run: npm run build
+
+    - name: Publicar en CDN de Azure
+      run: |
+        az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }}
+    -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+    az storage blob upload-batch --destination-container libraries --destination-path /cdn --source ./dist
+    
+    - name: Obtener URL del CDN de Azure
+      run: |
+        CDN_URL=$(az cdn endpoint show --name jr-tools --profile-name tools --resource-group test-rg --query "originHostHeader" -o tsv)
+        echo "CDN URL: $CDN_URL"
+
+    - name: Actualizar archivo JavaScript con la URL del CDN
+      run: |
+        cd ./dist
+        sed -i "s#main.js#${{ env.CDN_URL }}#g" csv-library.js
+
+    - name: Subir archivo JavaScript al CDN
+      run: |
+        az storage blob upload-batch --destination-container libraries --destination-path /cdn --source ./dist
+        

@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    environment: production
     steps:
     - name: Checkout del repositorio
       uses: actions/checkout@v2
@@ -27,7 +27,10 @@ jobs:
     - name: Log in with azure
       uses: azure/login@v1
       with: 
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
     - name: Publicar en CDN de Azure
       run: |
         az storage blob upload-batch --destination-container cdn --destination-path /dist --source ./dist

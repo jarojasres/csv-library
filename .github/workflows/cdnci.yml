@@ -30,11 +30,11 @@ jobs:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
     - name: Publicar en CDN de Azure
       run: |
-        az storage blob upload-batch --destination-container libraries --destination-path /cdn --source ./dist
+        az storage blob upload-batch --destination-container cdn --destination-path /dist --source ./dist
     
     - name: Obtener URL del CDN de Azure
       run: |
-        CDN_URL=$(az cdn endpoint show --name jr-tools --profile-name tools --resource-group test-rg --query "originHostHeader" -o tsv)
+        CDN_URL=$(az cdn endpoint show --name jr-tools --profile-name tools --resource-group TestGroup --query "originHostHeader" -o tsv)
         echo "CDN URL: $CDN_URL"
 
     - name: Actualizar archivo JavaScript con la URL del CDN
@@ -44,5 +44,5 @@ jobs:
 
     - name: Subir archivo JavaScript al CDN
       run: |
-        az storage blob upload-batch --destination-container libraries --destination-path /cdn --source ./dist
+        az storage blob upload-batch --destination-container cdn --destination-path /dist --source ./dist
         

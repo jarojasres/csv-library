@@ -6,11 +6,12 @@ on:
       - main # Cambia el nombre de la rama si es necesario
 
 jobs:
-  permissions:
-    id-token: write
+  
   build:
     runs-on: ubuntu-latest
     environment: production
+    permissions:
+      id-token: write
     steps:
     - name: Checkout del repositorio
       uses: actions/checkout@v2

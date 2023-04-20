@@ -51,7 +51,7 @@ jobs:
     - name: Actualizar archivo JavaScript con la URL del CDN
       run: |
         cd ./dist
-        sed -i "s#main.js#${{ env.CDN_URL }}#g" csv-library.js
+        sed -i "s#main.js#${{ env.CDN_URL }}#g" main.js
 
     - name: Subir archivo JavaScript al CDN
       run: |

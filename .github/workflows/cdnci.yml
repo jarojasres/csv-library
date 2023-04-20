@@ -36,7 +36,7 @@ jobs:
 
     - name: Publicar en CDN de Azure
       run: |
-        az storage blob upload-batch --destination-container cdn --destination-path /dist --source ./dist
+        az storage blob upload-batch --destination cdn --source ./dist
     
     - name: Obtener URL del CDN de Azure
       run: |

@@ -45,7 +45,7 @@ jobs:
 
     - name: Obtener URL del CDN de Azure
       run: |
-        CDN_URL=$(az cdn endpoint show --name jr-tools --profile-name tools --resource-group TestGroup --query "originHostHeader" -o tsv)
+        CDN_URL=$(az cdn endpoint show --name jarojasres-tools --profile-name tools --resource-group TestGroup --query "originHostHeader" -o tsv)
         echo "CDN URL: $CDN_URL"
 
     - name: Actualizar archivo JavaScript con la URL del CDN

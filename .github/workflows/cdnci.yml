@@ -36,8 +36,13 @@ jobs:
 
     - name: Publicar en CDN de Azure
       run: |
-        az storage blob upload-batch --connection-string ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }} --destination cdn --source ./dist
-    
+        az storage blob upload-batch --destination $container_name --source ./dist --account-name $account_name --account-key $account_key
+        
+      env:
+        container_name: 'cdn'
+        account_name: 'jarojasresstorage'
+        account_key: ${{ secrets.AZURE_STORAGE_KEY }}
+
     - name: Obtener URL del CDN de Azure
       run: |
         CDN_URL=$(az cdn endpoint show --name jr-tools --profile-name tools --resource-group TestGroup --query "originHostHeader" -o tsv)
